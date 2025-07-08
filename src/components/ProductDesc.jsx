@@ -1,22 +1,34 @@
-import React from "react";
 
-function ProductDesc({ image, title, price, onBack }) {
+import React from "react";
+import productData from "../data/products";
+import { Link } from "react-router-dom";
+
+
+function ProductDesc() {
+  const path = window.location.pathname;
+  const encodedTitle = path.split("/products/")[1];
+  const decodedTitle = decodeURIComponent(encodedTitle);
+
+  const product = productData.find((item) => item.title === decodedTitle);
+
+  
   return (
     <div className="bg-white shadow-md rounded-lg max-w-4xl mx-auto p-6">
       <div className="flex flex-col md:flex-row h-full gap-6">
-
         <div className="w-full md:w-1/2">
           <img
-            src={image}
-            alt={title}
+            src={product.image}
+            alt={product.title}
             className="object-cover w-full h-full max-h-96 rounded-md"
           />
         </div>
 
         <div className="w-full md:w-1/2 flex flex-col justify-between max-h-96">
           <div className="flex flex-col gap-4 text-left">
-            <h1 className="text-2xl font-semibold text-gray-800">{title}</h1>
-            <p className="text-lg font-bold text-gray-900">{price}</p>
+            <h1 className="text-2xl font-semibold text-gray-800">
+              {product.title}
+            </h1>
+            <p className="text-lg font-bold text-gray-900">{product.price}</p>
             <p className="text-sm text-gray-700 overflow-auto">
               Neque porro quisquam est, qui dolore ipsum quia dolor sit amet,
               consectetur adipisci velit, sed quia non incidunt lores ta porro
@@ -37,12 +49,10 @@ function ProductDesc({ image, title, price, onBack }) {
               </button>
             </div>
 
-            <button
-              className="text-blue-600 text-sm underline"
-              onClick={onBack}
-            >
-              ← Go Back
-            </button>
+            <Link to="/" className="text-blue-600 text-sm underline">
+            ← Go Back
+            </Link>
+
           </div>
         </div>
       </div>

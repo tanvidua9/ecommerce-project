@@ -1,19 +1,8 @@
-import React, { useState } from 'react';
-import ProductDesc from './ProductDesc';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Product({ image, title, price, category }) {
-  const [showDesc, setShowDesc] = useState(false);
 
-  if (showDesc) {
-    return (
-      <ProductDesc
-        image={image}
-        title={title}
-        price={price}
-        onBack={() => setShowDesc(false)} 
-      />
-    );
-  }
 
   return (
     <div className="p-4 flex flex-col items-center text-center">
@@ -22,12 +11,13 @@ function Product({ image, title, price, category }) {
       <h3 className="text-lg font-semibold">{title}</h3>
       <p className="text-gray-800 font-bold">{price}</p>
 
-      <button
+    
+       <Link
+        to={`/products/${encodeURIComponent(title)}`}
         className="rounded-md p-1 bg-gray-800 text-white text-sm mt-2"
-        onClick={() => setShowDesc(true)}
       >
         See description
-      </button>
+      </Link>
     </div>
   );
 }
