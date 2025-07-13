@@ -57,6 +57,12 @@ function ProductList() {
           <Product key={index} {...product} />
         ))}
       </div>
+
+       <div className="flex justify-start mt-10 mb-10">
+            <button className="bg-red-700 text-white px-4 py-2 mr-2 rounded">1</button>
+            <button className="bg-white text-red-700 border border-red-700 px-4 py-2 mr-2 rounded">2</button>
+            <button className="bg-white text-red-700 border border-red-700 px-4 py-2 rounded">→</button>
+        </div>
     </>
   );
 }
