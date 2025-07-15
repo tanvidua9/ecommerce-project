@@ -1,10 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Product from "./Product";
-import productData from "../data/products";
+import NoMatching from "./NoMatching";
+import { getProductList } from "../api";
+import Loading from "./Loading";
 
 function ProductList() {
   const [query, setQuery] = useState("");
   const [sortType, setSortType] = useState("default");
+  const[allProducts, setAllProducts]=useState([]);
+  const [loading,setLoading]= useState(true);
+
+  useEffect(()=>{
+    const xyz = getProductList();
+    const abc = xyz.then(function(products){
+      setAllProducts(products);
+      setLoading(false);
+    })
+  },[])
+
+  console.log(allProducts);
+
+  if (loading) return <Loading />;
+
 
   function handleSearch(e) {
     setQuery(e.target.value);
@@ -14,9 +31,9 @@ function ProductList() {
     setSortType(e.target.value);
   }
 
-  function getFilteredData() {
-    if (!query) return productData;
-    return productData.filter((item) =>
+  function getFilteredData(data) {
+    if (!query) return data;
+    return data.filter((item) =>
       item.title.toLowerCase().includes(query.toLowerCase())
     );
   }
@@ -24,7 +41,7 @@ function ProductList() {
   function getSortedData(data) {
     if (sortType === "price") {
       return data.sort((x, y) =>
-        parseFloat(x.price.replace("$", "")) - parseFloat(y.price.replace("$", ""))
+        parseFloat(x.price) - parseFloat(y.price)
       );
     } else if (sortType === "name") {
       return data.sort((x, y) => x.title.localeCompare(y.title));
@@ -32,7 +49,7 @@ function ProductList() {
     return data;
   }
 
-  const filtered = getFilteredData();
+  const filtered = getFilteredData(allProducts);
   const finalData = getSortedData([...filtered]);
 
   return (
@@ -52,10 +69,24 @@ function ProductList() {
         />
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      {finalData.length>0 && <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {finalData.map((product, index) => (
           <Product key={index} {...product} />
         ))}
+      </div>
+      }
+
+
+       {finalData.length==0 && 
+       <>
+          <NoMatching>Sorry, No match found</NoMatching>
+          <NoMatching>You can find something else</NoMatching>
+       </>}
+
+      <div className="flex justify-start mt-10 mb-10">
+            <button className="bg-red-700 text-white px-4 py-2 mr-2 rounded">1</button>
+            <button className="bg-white text-red-700 border border-red-700 px-4 py-2 mr-2 rounded">2</button>
+            <button className="bg-white text-red-700 border border-red-700 px-4 py-2 rounded">→</button>
       </div>
     </>
   );
