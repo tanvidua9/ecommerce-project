@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getProductData } from "../api";
@@ -7,10 +6,11 @@ import { HiArrowSmLeft, HiArrowSmRight } from "react-icons/hi";
 import NotFound from "./NotFound";
 import CartPage from "../Pages/CartPage";
 
-function ProductDesc() {
+function ProductDesc({onAddToCart}) {
   const id = +(useParams().id);
   const [product, setProduct]= useState(null);
   const[loading,setLoading]= useState(true);
+  const[count, setCount]=useState(1);
   
   useEffect(function(){
     const p=getProductData(id);
@@ -22,9 +22,17 @@ function ProductDesc() {
     })
   },[id])
 
+  function handleButtonClick(){
+    onAddToCart(id,count)
+  }
+
   if(loading) return <Loading/>;
 
   if(!product)  return <NotFound/>;
+
+  function handleCountChange(event){
+    setCount(+event.target.value);
+  }
   
 
   //undefined--> false
@@ -57,43 +65,47 @@ function ProductDesc() {
               <div className="flex gap-2 items-center">
                 <input
                   type="number"
-                  defaultValue={1}
+                  onChange={handleCountChange}
+                  value={count}
                   min={1}
                   className="w-12 border p-1 text-center rounded"
                 />
-                <Link to="/cart" className="bg-red-500 text-white px-4 py-2 rounded text-sm">
+                <button onClick={handleButtonClick} className="bg-red-500 text-white px-4 py-2 rounded text-sm">
                   ADD TO CART
-                </Link>
+                </button>
               </div>
 
-              <Link to="/" className="text-blue-600 text-sm underline">
-                ← Go Back
+              <Link to="/" className="inline-flex items-center gap-1 text-sm font-medium text-indigo-600 hover:text-indigo-800 hover:underline transition-all duration-200">
+                <span className="text-lg">←</span> Go Back
               </Link>
+
             </div>
           </div>
         </div>
       </div>
 
-      <div className="flex justify-between max-w-4xl  px-6 mt-4">
+      <div className="w-full flex justify-between px-6 mt-8">
         {id > 1 ? (
           <Link
-            className="mt-2 flex items-center gap-1"
+            className="flex items-center gap-1 text-white bg-blue-950 hover:bg-indigo-700 px-4 py-2 rounded shadow"
             to={`/products/${id - 1}`}
           >
-            <HiArrowSmLeft className="text-2xl" />
+            <HiArrowSmLeft className="text-xl" />
             Previous
           </Link>
         ) : (
           <div></div>
         )}
-          <Link
-            className="mt-2 flex items-center gap-1 ml-auto"
-            to={`/products/${id + 1}`}
-          >
-            Next
-            <HiArrowSmRight className="text-2xl" />
-          </Link>
+
+        <Link
+          className="ml-auto flex items-center gap-1 text-white bg-indigo-950 hover:bg-indigo-700 px-4 py-2 rounded shadow"
+          to={`/products/${id + 1}`}
+        >
+          Next
+          <HiArrowSmRight className="text-xl" />
+        </Link>
       </div>
+
     </>
   );
 }
