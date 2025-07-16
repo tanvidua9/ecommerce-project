@@ -6,7 +6,7 @@ import ProductList from "./components/ProductList";
 import ProductDesc from "./components/ProductDesc";
 import NotFound from "./components/NotFound";
 import CartPage from "./Pages/CartPage";
-import { FaUnsplash } from "react-icons/fa";
+
 
 function App() {
   const [cart, setCart] = useState({});
