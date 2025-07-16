@@ -11,7 +11,6 @@ function Navbar({ productCount }) {
         className="h-8"
       />
 
-      {/* 🛒 Make cart icon clickable */}
       <Link to="/cart" className="relative">
         <RiShoppingBagLine className="text-4xl text-blue-950" />
         <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">

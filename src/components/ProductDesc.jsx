@@ -56,8 +56,7 @@ function ProductDesc({onAddToCart}) {
               <h1 className="text-2xl font-semibold text-gray-800">{product.title}</h1>
               <p className="text-lg font-bold text-gray-900">${product.price}</p>
               <p className="text-sm text-gray-700 overflow-auto">
-                Neque porro quisquam est, qui dolore ipsum quia dolor sit amet,
-                consectetur adipisci velit...
+                {product.description}
               </p>
             </div>
 
