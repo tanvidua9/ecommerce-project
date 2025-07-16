@@ -10,7 +10,7 @@ function CartRow({ item }) {
           alt={item.title}
           className="w-12 h-12 object-cover rounded"
         />
-        <p className="text-blue-700 font-medium text-sm">{item.title}</p>
+        <p className="text-teal-700 font-medium text-sm">{item.title}</p>
       </div>
 
       <div className="w-1/6 text-center">${item.price.toFixed(2)}</div>

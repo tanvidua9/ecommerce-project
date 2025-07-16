@@ -1,20 +1,46 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
+import { FaStar, FaRegStar } from "react-icons/fa";
+
+const getRandomSale = () => {
+  return (Math.random() * (30 - 5) + 5).toFixed(1);
+};
 
 function Product({ id, thumbnail, title, price, category }) {
-
+  const rating = 4;
+  const sale = getRandomSale();
 
   return (
-    <div className="p-4 flex flex-col items-center text-center">
-      <img src={thumbnail} alt={title} className="w-full h-48 object-cover rounded mb-4" />
-      <h4 className="text-md text-gray-600">{category}</h4>
-      <h3 className="text-lg font-semibold">{title}</h3>
-      <p className="text-gray-800 font-bold">{price}</p>
+    <div className="p-4 flex flex-col items-center text-center bg-white rounded shadow-sm relative">
+      <div className="absolute top-2 right-2 text-xs text-orange-600 font-bold">
+        {sale}% <br /> OFF
+      </div>
 
-    
-       <Link
+      <div className="w-full h-48 mb-4">
+        <img
+          src={thumbnail}
+          alt={title}
+          className="object-contain w-full h-full rounded"
+        />
+      </div>
+
+      <h4 className="text-sm text-gray-500">{category}</h4>
+      <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
+      <p className="text-teal-700 font-bold">${price}</p>
+
+      <div className="flex justify-center mt-1 mb-1">
+      {[...Array(5)].map((_, i) => (
+        i < rating ? (
+          <FaStar key={i} className="text-orange-500 text-sm" />
+        ) : (
+          <FaRegStar key={i} className="text-gray-300 text-sm" />
+        )
+      ))}
+      </div>
+
+      <Link
         to={`/products/${id}`}
-        className="rounded-md p-1 bg-gray-800 text-white text-sm mt-2"
+        className="rounded px-3 py-1 bg-teal-600 text-white text-sm mt-1"
       >
         See description
       </Link>

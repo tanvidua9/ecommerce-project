@@ -45,13 +45,13 @@ function CartPage() {
               placeholder="Coupon code"
               className="border px-3 py-2 rounded text-sm w-40"
             />
-            <button className="bg-red-500 text-white text-sm px-4 py-2 rounded">
+            <button className="bg-teal-500 text-white text-sm px-4 py-2 rounded">
               APPLY COUPON
             </button>
           </div>
 
           <div>
-            <button className="bg-red-300 text-gray-500 text-sm px-4 py-2 rounded">
+            <button className="bg-teal-300 text-gray-500 text-sm px-4 py-2 rounded">
               UPDATE CART
             </button>
           </div>
@@ -69,7 +69,7 @@ function CartPage() {
             <span>Total</span>
             <span>${subtotal.toFixed(2)}</span>
           </div>
-          <button className="w-full bg-red-500 text-white mt-4 px-4 py-2 rounded">
+          <button className="w-full bg-teal-500 text-white mt-4 px-4 py-2 rounded">
             PROCEED TO CHECKOUT
           </button>
         </div>

@@ -54,8 +54,9 @@ function ProductList() {
 
   return (
     <>
+   
       <div className="flex flex-wrap justify-between items-center mb-6 gap-4">
-        <select className="border border-gray-300 p-2 rounded" onChange={handleSort}>
+        <select className="border border-gray-300 p-2 rounded text-sm" onChange={handleSort}>
           <option value="default">Default Sorting</option>
           <option value="name">Sort by Name</option>
           <option value="price">Sort by Price</option>
@@ -65,28 +66,29 @@ function ProductList() {
           value={query}
           onChange={handleSearch}
           placeholder="Search"
-          className="border border-gray-700 rounded-md p-2"
+          className="border border-gray-300 rounded-md p-2 text-sm"
         />
       </div>
 
-      {finalData.length>0 && <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {finalData.map((product, index) => (
-          <Product key={index} {...product} />
-        ))}
-      </div>
-      }
+      {finalData.length > 0 && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 ">
+          {finalData.map((product, index) => (
+            <Product key={index} {...product} />
+          ))}
+        </div>
+      )}
 
-
-       {finalData.length==0 && 
-       <>
-          <NoMatching>Sorry, No match found</NoMatching>
-          <NoMatching>You can find something else</NoMatching>
-       </>}
+      {finalData.length === 0 && (
+        <>
+          <NoMatching>Sorry, no match found.</NoMatching>
+          <NoMatching>Try a different keyword.</NoMatching>
+        </>
+      )}
 
       <div className="flex justify-start mt-10 mb-10">
-            <button className="bg-red-700 text-white px-4 py-2 mr-2 rounded">1</button>
-            <button className="bg-white text-red-700 border border-red-700 px-4 py-2 mr-2 rounded">2</button>
-            <button className="bg-white text-red-700 border border-red-700 px-4 py-2 rounded">→</button>
+        <button className="bg-orange-700 text-white px-4 py-2 mr-2 rounded">1</button>
+        <button className="bg-white text-orange-700 border border-orange-700 px-4 py-2 mr-2 rounded">2</button>
+        <button className="bg-white text-orange-700 border border-orange-700 px-4 py-2 rounded">→</button>
       </div>
     </>
   );
