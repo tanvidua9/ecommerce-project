@@ -11,7 +11,7 @@ import CartPage from "./Pages/CartPage";
 function App() {
   const savedDataString= localStorage.getItem("my-cart") || "{}";
   const savedData= JSON.parse(savedDataString);
-
+ 
   const [cart, setCart] = useState(savedData);
 
   function handleAddToCart(productId, count) {
@@ -27,7 +27,7 @@ function App() {
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar productCount={totalCount} />
-      <main className="pt-20 flex-1 bg-gray-50 pb-20 px-6">
+      <main className="pt-20 flex-1 bg-gray-100 pb-20 pl-30 pr-30">
         <div className="bg-white px-6 py-4 rounded">
           <Routes>
             <Route index element={<ProductList />} />

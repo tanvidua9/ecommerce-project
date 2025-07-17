@@ -78,7 +78,7 @@ function ProductList() {
         </div>
       )}
 
-      {finalData.length === 0 && (
+      {finalData.length == 0 && (
         <>
           <NoMatching>Sorry, no match found.</NoMatching>
           <NoMatching>Try a different keyword.</NoMatching>

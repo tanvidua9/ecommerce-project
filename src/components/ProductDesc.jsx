@@ -4,7 +4,6 @@ import { getProductData } from "../api";
 import Loading from "./Loading";
 import { HiArrowSmLeft, HiArrowSmRight } from "react-icons/hi";
 import NotFound from "./NotFound";
-import CartPage from "../Pages/CartPage";
 
 function ProductDesc({onAddToCart}) {
   const id = +(useParams().id);
