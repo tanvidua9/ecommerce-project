@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useCallback,useMemo } from "react";
 import { Routes, Route} from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -6,7 +6,9 @@ import ProductList from "./components/ProductList";
 import ProductDesc from "./components/ProductDesc";
 import NotFound from "./components/NotFound";
 import CartPage from "./Pages/CartPage";
-
+import LoginPage from "./Pages/LoginPage";
+import SignUpPage from "./Pages/SignUpPage";
+import ForgotPasswordPage from "./Pages/ForgotPasswordPage";
 
 function App() {
   const savedDataString= localStorage.getItem("my-cart") || "{}";
@@ -14,15 +16,18 @@ function App() {
  
   const [cart, setCart] = useState(savedData);
 
-  function handleAddToCart(productId, count) {
+  const handleAddToCart = useCallback((productId, count) => {
     const oldCount = cart[productId] || 0;
     const newCart = { ...cart, [productId]: oldCount + count };
     setCart(newCart);
-    const cartString= JSON.stringify(newCart);
+    const cartString = JSON.stringify(newCart);
     localStorage.setItem("my-cart", cartString);
-  }
+  }, [cart]);
 
-  const totalCount = Object.values(cart).reduce((a, b) => a + b, 0);
+
+  const totalCount = useMemo(() => {
+    return Object.values(cart).reduce((a, b) => a + b, 0);
+  }, [cart]);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -36,6 +41,9 @@ function App() {
               element={<ProductDesc onAddToCart={handleAddToCart} />}
             />
             <Route path="/cart" element={<CartPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignUpPage />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

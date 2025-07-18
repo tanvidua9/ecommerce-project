@@ -1,20 +1,34 @@
-import React from "react";
-import { RiShoppingCartLine } from "react-icons/ri"; 
-import { Link } from "react-router-dom";
+import React, { memo } from "react";
+import { RiShoppingCartLine } from "react-icons/ri";
+import { Link, useNavigate } from "react-router-dom";
+
 
 function Navbar({ productCount }) {
+  const navigate = useNavigate();
+
   return (
     <div className="bg-white shadow-sm py-2 fixed top-0 left-0 w-full flex justify-between items-center px-6 md:px-20 z-50">
-     <h1 className="text-xl font-bold text-teal-700">ShopSmart</h1>
+      <h1 className="text-xl font-bold text-teal-700">ShopSmart</h1>
 
-      <Link to="/cart" className="relative">
-        <RiShoppingCartLine className="text-4xl text-teal-700" /> 
-        <span className="absolute -top-2 -right-2 bg-teal-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-          {productCount}
-        </span>
-      </Link>
+      <div className="flex items-center gap-3">
+         <button onClick={() => navigate("/")} className="text-sm text-teal-700 border border-teal-600 px-3 py-1 rounded hover:bg-teal-50">
+          Home
+        </button>
+        <button onClick={() => navigate("/login")} className="text-sm text-teal-700 border border-teal-600 px-3 py-1 rounded hover:bg-teal-50">
+          Login
+        </button>
+        <button onClick={() => navigate("/signup")} className="text-sm text-teal-700 border border-teal-600 px-3 py-1 rounded hover:bg-teal-50">
+          Signup
+        </button>
+        <Link to="/cart" className="relative ml-3">
+          <RiShoppingCartLine className="text-3xl text-teal-700" />
+          <span className="absolute -top-2 -right-2 bg-teal-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+            {productCount}
+          </span>
+        </Link>
+      </div>
     </div>
   );
 }
 
-export default Navbar;
+export default memo(Navbar);

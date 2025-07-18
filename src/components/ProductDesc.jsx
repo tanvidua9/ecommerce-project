@@ -12,6 +12,7 @@ function ProductDesc({onAddToCart}) {
   const[count, setCount]=useState(1);
   
   useEffect(function(){
+    setLoading(true);
     const p=getProductData(id);
     p.then(function(product){
       setProduct(product);
@@ -23,7 +24,8 @@ function ProductDesc({onAddToCart}) {
   console.log(product);
 
   function handleButtonClick(){
-    onAddToCart(id,count)
+    onAddToCart(id,count);
+    setCount(0);
   }
 
   if(loading) return <Loading/>;

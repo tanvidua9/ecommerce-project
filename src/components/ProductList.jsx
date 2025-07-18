@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useCallback,useMemo } from "react";
 import Product from "./Product";
 import NoMatching from "./NoMatching";
 import { getProductList } from "../api";
@@ -18,39 +18,35 @@ function ProductList() {
     })
   },[])
 
-  console.log(allProducts);
-
-  if (loading) return <Loading />;
-
-
-  function handleSearch(e) {
+  //useCallback	- Prevents function recreation on every render (good for passing to children)
+  const handleSearch = useCallback((e) => {
     setQuery(e.target.value);
-  }
+  }, []);
 
-  function handleSort(e) {
+  const handleSort = useCallback((e) => {
     setSortType(e.target.value);
-  }
+  }, []);
 
-  function getFilteredData(data) {
-    if (!query) return data;
-    return data.filter((item) =>
+
+  //useMemo - Prevents re-filtering and re-sorting unless relevant state changes
+  const filtered = useMemo(() => {
+    if (!query) return allProducts;
+    return allProducts.filter((item) =>
       item.title.toLowerCase().includes(query.toLowerCase())
     );
-  }
+  }, [allProducts, query]);
 
-  function getSortedData(data) {
+  const finalData = useMemo(() => {
     if (sortType === "price") {
-      return data.sort((x, y) =>
-        parseFloat(x.price) - parseFloat(y.price)
-      );
+      return [...filtered].sort((x, y) => x.price - y.price);
     } else if (sortType === "name") {
-      return data.sort((x, y) => x.title.localeCompare(y.title));
+      return [...filtered].sort((x, y) => x.title.localeCompare(y.title));
     }
-    return data;
-  }
+    return filtered;
+  }, [filtered, sortType]);
+  
+  if (loading) return <Loading />;
 
-  const filtered = getFilteredData(allProducts);
-  const finalData = getSortedData([...filtered]);
 
   return (
     <>
