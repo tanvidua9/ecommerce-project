@@ -48,7 +48,7 @@ export default function LoginPage() {
           <div className="text-red-500 text-sm">{formik.errors.password}</div>
         )}
 
-        <button type="submit" className="bg-teal-600 text-white py-2 rounded hover:bg-teal-700">
+        <button type="submit" className="bg-teal-600 text-white py-2 rounded hover:bg-teal-700 disabled:bg-teal-200" disabled={!(formik.dirty && formik.isValid)}>
           Login
         </button>
 

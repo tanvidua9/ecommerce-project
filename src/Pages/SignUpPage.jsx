@@ -77,7 +77,7 @@ export default function SignupPage() {
           <div className="text-red-500 text-sm">{formik.errors.confirmPassword}</div>
         )}
 
-        <button type="submit" className="bg-teal-600 text-white py-2 rounded hover:bg-teal-700">
+        <button type="submit" className="bg-teal-600 text-white py-2 rounded hover:bg-teal-700 disabled:bg-teal-200" disabled={!(formik.dirty && formik.isValid)}>
           Signup
         </button>
 
