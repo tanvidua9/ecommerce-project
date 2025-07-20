@@ -2,7 +2,7 @@ import React from "react";
 import { Formik, Form} from "formik";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
-import InputField from "../components/InputField";
+import { FormikInput } from "../components/InputField";
 
 export default function ForgotPasswordPage() {
   const initialValues = { email: "" };
@@ -25,7 +25,7 @@ export default function ForgotPasswordPage() {
       <Form className="flex flex-col gap-3">
         <h2 className="text-xl font-bold text-teal-700 mb-4">Reset Password</h2>
 
-        <InputField name="email" type="email" placeholder="Enter your email" label="Email address" required/>
+        <FormikInput name="email" id="email" type="email" placeholder="Enter your email" label="Email address" required/>
 
         <button type="submit" className="bg-teal-600 text-white py-2 rounded hover:bg-teal-700">
           Send Reset Link

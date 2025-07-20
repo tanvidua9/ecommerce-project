@@ -2,7 +2,7 @@ import React from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
-import InputField from "../components/InputField";
+import { FormikInput } from "../components/InputField";
 
 
 export default function SignupPage() {
@@ -36,14 +36,14 @@ export default function SignupPage() {
       >
       <Form className="flex flex-col gap-3">
         <h2 className="text-xl font-bold text-teal-700 mb-4">Sign Up</h2>
-        <InputField
+        <FormikInput
           id="name"
           name="name"
           placeholder="Name"
           required
         />
 
-        <InputField
+        <FormikInput
           id="email"
           name="email"
           type="email"
@@ -51,7 +51,7 @@ export default function SignupPage() {
           required
         />
 
-        <InputField
+        <FormikInput
           id="password"
           name="password"
           type="password"
@@ -59,7 +59,7 @@ export default function SignupPage() {
           required
         />
 
-        <InputField
+        <FormikInput
           id="confirmPassword"
           name="confirmPassword"
           type="password"

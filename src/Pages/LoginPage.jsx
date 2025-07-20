@@ -2,7 +2,7 @@ import React from "react";
 import { Formik,Form } from "formik";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
-import InputField from "../components/InputField";
+import { FormikInput } from "../components/InputField";
 
 export default function LoginPage() {
   const initialValues = {
@@ -21,25 +21,25 @@ export default function LoginPage() {
 
 
   return (
-    <div className="mx-auto max-w-md p-6">
-      <Formik initialValues={initialValues} validationSchema={schema} onSubmit={handleLoginSubmit} validateOnMount>
+  <div className="mx-auto max-w-md p-6">
+    <Formik initialValues={initialValues} validationSchema={schema} onSubmit={handleLoginSubmit} validateOnMount>
       <Form className="flex flex-col gap-3">
         <h2 className="text-xl font-bold text-teal-700 mb-4">Login</h2>
-        <InputField
-          id="email"
-          name="email"
-          type="email"
-          placeholder="Email"
-          required
-        />
+          <FormikInput
+            id="email"
+            name="email"
+            type="email"
+            placeholder="Email"
+            required
+          />
 
-        <InputField
-          id="password"
-          name="password"
-          type="password"
-          placeholder="Password"
-          required
-        />
+          <FormikInput
+            id="password"
+            name="password"
+            type="password"
+            placeholder="Password"
+            required
+          />
 
         <button type="submit" className="bg-teal-600 text-white py-2 rounded hover:bg-teal-700 disabled:bg-teal-200">
           Login
@@ -52,7 +52,7 @@ export default function LoginPage() {
           <Link to="/forgot-password" className="text-teal-700 underline">Forgot Password?</Link>
         </div>
       </Form>
-      </Formik>
-</div>
+    </Formik>
+  </div>
   );
 }
