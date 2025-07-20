@@ -2,7 +2,7 @@ import React from "react";
 import FormikHOC from "./FormicHOC";
 
 
-function InputField({ name, id,label,touched,error,...rest }) {
+function InputField({ name,id,label,value,onChange,onBlur,error,touched,...rest }) {
 
   let borderClass = "border-gray-300 focus:border-teal-500";
   if (touched && error) {
@@ -17,8 +17,11 @@ function InputField({ name, id,label,touched,error,...rest }) {
         </label>
       )}
       <input
-        name={name}
         id={id}
+        name={name}
+        value={value}
+        onChange={onChange}
+        onBlur={onBlur}
         {...rest}
         className={`p-2 rounded border ${borderClass} focus:outline-none`}
       />

@@ -1,11 +1,10 @@
 import React from "react";
-import { Formik,Form } from "formik";
+import {withFormik} from "formik";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
-import { FormikInput } from "../components/InputField";
+import InputField from "../components/InputField";
 
-export default function LoginPage() {
-  const initialValues = {
+const initialValues = {
     email: "",
     password: ""
   };
@@ -17,28 +16,36 @@ export default function LoginPage() {
 
   const handleLoginSubmit = (values) => {
     console.log("Login:", values);
-  };
+};
 
 
+export function LoginPage({values,errors,touched,handleChange,handleBlur,handleSubmit}) {
   return (
   <div className="mx-auto max-w-md p-6">
-    <Formik initialValues={initialValues} validationSchema={schema} onSubmit={handleLoginSubmit} validateOnMount>
-      <Form className="flex flex-col gap-3">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-3">
         <h2 className="text-xl font-bold text-teal-700 mb-4">Login</h2>
-          <FormikInput
-            id="email"
+          <InputField
             name="email"
+            id="email"
             type="email"
             placeholder="Email"
-            required
+            value={values.email}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={errors.email}
+            touched={touched.email}
           />
 
-          <FormikInput
-            id="password"
+          <InputField
             name="password"
+            id="password"
             type="password"
             placeholder="Password"
-            required
+            value={values.password}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={errors.password}
+            touched={touched.password}
           />
 
         <button type="submit" className="bg-teal-600 text-white py-2 rounded hover:bg-teal-700 disabled:bg-teal-200">
@@ -51,8 +58,19 @@ export default function LoginPage() {
         <div className="text-sm text-gray-600">
           <Link to="/forgot-password" className="text-teal-700 underline">Forgot Password?</Link>
         </div>
-      </Form>
-    </Formik>
+      </form>
   </div>
   );
 }
+
+const myHOC = withFormik({
+  initialValues: initialValues,
+  validationSchema: schema,
+  onSubmit: handleLoginSubmit,
+  validateOnMount: true
+});
+
+
+const EasyLogin = myHOC(LoginPage);
+
+export default EasyLogin;
