@@ -1,90 +1,81 @@
 import React from "react";
-import { useFormik } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
+import InputField from "../components/InputField";
+
 
 export default function SignupPage() {
-  const formik = useFormik({
-    initialValues: {
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    },
-    validationSchema: Yup.object({
-      name: Yup.string().required("Name required"),
-      email: Yup.string().email("Invalid email").required("Required"),
-      password: Yup.string().min(6).required("Required"),
-      confirmPassword: Yup.string()
-        .oneOf([Yup.ref("password")], "Passwords must match")
-        .required("Required"),
-    }),
-    onSubmit: (values) => console.log("Signup:", values),
+  const initialValues = {
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: ""
+  };
+
+  const schema = Yup.object({
+    name: Yup.string().required("Name required"),
+    email: Yup.string().email("Invalid email").required("Required"),
+    password: Yup.string().min(6).required("Required"),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password")], "Passwords must match")
+      .required("Required")
   });
+
+  const handleSignupSubmit = (values) => {
+    console.log("Signup:", values);
+  };
 
   return (
     <div className="mx-auto max-w-md p-6">
-      <h2 className="text-xl font-bold text-teal-700 mb-4">Sign Up</h2>
-      <form onSubmit={formik.handleSubmit} className="flex flex-col gap-3">
-        <input
+      <Formik
+        initialValues={initialValues}
+        validationSchema={schema}
+        onSubmit={handleSignupSubmit}
+        validateOnMount
+      >
+      <Form className="flex flex-col gap-3">
+        <h2 className="text-xl font-bold text-teal-700 mb-4">Sign Up</h2>
+        <InputField
+          id="name"
           name="name"
           placeholder="Name"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.name}
-          className="border border-gray-300 p-2 rounded"
+          required
         />
-        {formik.touched.name && formik.errors.name && (
-          <div className="text-red-500 text-sm">{formik.errors.name}</div>
-        )}
 
-        <input
+        <InputField
+          id="email"
           name="email"
           type="email"
           placeholder="Email"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.email}
-          className="border border-gray-300 p-2 rounded"
+          required
         />
-        {formik.touched.email && formik.errors.email && (
-          <div className="text-red-500 text-sm">{formik.errors.email}</div>
-        )}
 
-        <input
+        <InputField
+          id="password"
           name="password"
           type="password"
           placeholder="Password"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.password}
-          className="border border-gray-300 p-2 rounded"
+          required
         />
-        {formik.touched.password && formik.errors.password && (
-          <div className="text-red-500 text-sm">{formik.errors.password}</div>
-        )}
 
-        <input
+        <InputField
+          id="confirmPassword"
           name="confirmPassword"
           type="password"
           placeholder="Confirm Password"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.confirmPassword}
-          className="border border-gray-300 p-2 rounded"
+          required
         />
-        {formik.touched.confirmPassword && formik.errors.confirmPassword && (
-          <div className="text-red-500 text-sm">{formik.errors.confirmPassword}</div>
-        )}
 
-        <button type="submit" className="bg-teal-600 text-white py-2 rounded hover:bg-teal-700 disabled:bg-teal-200" disabled={!(formik.dirty && formik.isValid)}>
+        <button type="submit" className="bg-teal-600 text-white py-2 rounded hover:bg-teal-700 disabled:bg-teal-200">
           Signup
         </button>
 
         <div className="text-sm text-gray-600 mt-2">
           Already have an account? <Link to="/login" className="text-teal-700 underline">Login</Link>
         </div>
-      </form>
+      </Form>
+      </Formik>
     </div>
   );
 }
