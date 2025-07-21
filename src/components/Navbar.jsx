@@ -17,9 +17,6 @@ function Navbar({ productCount }) {
         <button onClick={() => navigate("/login")} className="text-sm text-teal-700 border border-teal-600 px-3 py-1 rounded hover:bg-teal-50">
           Login
         </button>
-        <button onClick={() => navigate("/signup")} className="text-sm text-teal-700 border border-teal-600 px-3 py-1 rounded hover:bg-teal-50">
-          Signup
-        </button>
         <Link to="/cart" className="relative ml-3">
           <RiShoppingCartLine className="text-3xl text-teal-700" />
           <span className="absolute -top-2 -right-2 bg-teal-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">

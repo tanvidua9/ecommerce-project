@@ -1,29 +1,56 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CartList from "../components/CartList";
+import { getProductData } from "../api";
+import Loading from "../components/Loading";
 
-const sampleCart = [
-  {
-    id: 1,
-    title: "Black Printed Coffee Mug",
-    thumbnail:
-      "https://images.pexels.com/photos/3483967/pexels-photo-3483967.jpeg",
-    price: 15,
-    quantity: 2,
-  },
-  {
-    id: 2,
-    title: "Printed Dark Blue Tshirt",
-    thumbnail:
-      "https://images.pexels.com/photos/19362668/pexels-photo-19362668.jpeg",
-    price: 34,
-    quantity: 4,
-  },
-];
+function CartPage({cart,updateCart}) {
+  const [products,setProducts]= useState([]);
+  const[loading,setLoading]= useState(true);
+  const [localCart, setLocalCart]= useState(cart);
+  const productIds= Object.keys(cart);
 
-function CartPage() {
+  useEffect(function(){
+    setLocalCart(cart);
+  },[cart])
+
+  useEffect(function(){
+    setLoading(true);
+    const myPromises= productIds.map((id)=>{
+      return getProductData(id);
+    })
+    Promise.all(myPromises).then(function(products){
+      setProducts(products);
+      setLoading(false);
+    })
+  },[cart])
+
+  function handleRemove(event){
+    const productId= event.currentTarget.getAttribute("productid");
+    const newCart={...cart};
+    delete newCart[productId];
+    updateCart(newCart);
+  }
+
+  function updateMyCart(){
+    updateCart(localCart);
+  }
+
+  function handleChange(event,productId){
+    const newValue= +event.target.value;
+    //const productId= event.target.getAttribute("productid");
+    const newLocalCart= {...localCart, [productId]: newValue};
+    setLocalCart(newLocalCart);
+  }
+
+  if(loading){
+    return <Loading/>;
+  }
+
+
   let subtotal = 0;
-  for (let item of sampleCart) {
-    subtotal += item.price * item.quantity;
+  for (let item of products) {
+    const quantity = localCart[item.id] || 1;
+    subtotal += item.price * quantity;
   }
 
 
@@ -37,7 +64,7 @@ function CartPage() {
           <div className="w-1/6 text-right">Subtotal</div>
         </div>
 
-        <CartList items={sampleCart} />
+        <CartList items={products} handleRemove={handleRemove} handleChange={handleChange} localCart={localCart}/>
 
         <div className="flex justify-between items-center flex-wrap gap-4 px-4 py-4">
           <div className="flex gap-3 flex-wrap">
@@ -51,7 +78,7 @@ function CartPage() {
           </div>
 
           <div>
-            <button className="bg-teal-300 text-gray-500 text-sm px-4 py-2 rounded">
+            <button className="bg-teal-500 text-white text-sm px-4 py-2 rounded" onClick={updateMyCart}>
               UPDATE CART
             </button>
           </div>
@@ -79,3 +106,6 @@ function CartPage() {
 }
 
 export default CartPage;
+
+//why do we need to store the data in localStorage too
+
