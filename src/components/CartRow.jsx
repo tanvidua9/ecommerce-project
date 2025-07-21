@@ -14,12 +14,10 @@ function CartRow({ item, handleRemove, handleChange}) {
       </div>
 
       <div className="sm:w-1/6 text-sm sm:text-center text-gray-700">
-        <span className="sm:hidden font-semibold">Price: </span>
         ${item.price.toFixed(2)}
       </div>
 
       <div className="sm:w-1/6 sm:text-center text-sm">
-        <span className="sm:hidden font-semibold">Qty: </span>
         <input
           id={item.id}
           type="number"
@@ -33,7 +31,6 @@ function CartRow({ item, handleRemove, handleChange}) {
       </div>
 
       <div className="sm:w-1/6 sm:text-right text-sm text-gray-800 font-semibold">
-        <span className="sm:hidden font-semibold">Subtotal: </span>
         ${(item.price * item.quantity).toFixed(2)}
       </div>
     </div>

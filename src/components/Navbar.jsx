@@ -8,12 +8,9 @@ function Navbar({ productCount }) {
 
   return (
     <div className="bg-white shadow-sm py-2 fixed top-0 left-0 w-full flex justify-between items-center px-6 md:px-20 z-50">
-      <h1 className="text-xl font-bold text-teal-700">ShopSmart</h1>
+      <button onClick={() => navigate("/")}className="text-xl font-bold text-teal-700">ShopSmart</button>
 
       <div className="flex items-center gap-3">
-         <button onClick={() => navigate("/")} className="text-sm text-teal-700 border border-teal-600 px-3 py-1 rounded hover:bg-teal-50">
-          Home
-        </button>
         <button onClick={() => navigate("/login")} className="text-sm text-teal-700 border border-teal-600 px-3 py-1 rounded hover:bg-teal-50">
           Login
         </button>
