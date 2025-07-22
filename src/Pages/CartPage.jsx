@@ -57,32 +57,13 @@ function CartPage({cart,updateCart}) {
   return (
     <div className="max-w-5xl mx-auto mt-10 p-4 bg-white rounded">
       <div className="border border-gray-200 rounded">
-        <div className="hidden sm:flex justify-between bg-gray-100 font-semibold text-sm px-4 py-2">
-          <div className="w-1/3">Product</div>
-          <div className="w-1/6 text-center">Price</div>
-          <div className="w-1/6 text-center">Quantity</div>
-          <div className="w-1/6 text-right">Subtotal</div>
-        </div>
-
-        <CartList items={products} handleRemove={handleRemove} handleChange={handleChange} localCart={localCart}/>
-
-        <div className="flex justify-between items-center flex-wrap gap-4 px-4 py-4">
-          <div className="flex gap-3 flex-wrap">
-            <input
-              placeholder="Coupon code"
-              className="border px-3 py-2 rounded text-sm w-40"
-            />
-            <button className="bg-teal-500 text-white text-sm px-4 py-2 rounded">
-              APPLY COUPON
-            </button>
-          </div>
-
-          <div>
-            <button className="bg-teal-500 text-white text-sm px-4 py-2 rounded" onClick={updateMyCart}>
-              UPDATE CART
-            </button>
-          </div>
-        </div>
+        <CartList
+          items={products}
+          handleRemove={handleRemove}
+          handleChange={handleChange}
+          localCart={localCart}
+          updateMyCart={updateMyCart}
+        />
 
         <div className="flex justify-end mt-6">
           <div className="border border-gray-300 p-4 rounded w-full sm:w-2/3 md:w-1/3">
