@@ -3,6 +3,21 @@ import {withFormik} from "formik";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
 import InputField from "../components/InputField";
+import axios from "axios";
+
+function callLoginApi(values,bag){
+  axios.post('https://myeasykart.codeyogi.io/login', {
+        email: values.email,
+        password: values.password
+    }).then((response) => {
+        const { user, token } = response.data;
+        localStorage.setItem("token", token);
+        bag.props.setUser(user);
+    }).catch((error) => {
+        console.log("Invalid Credentials");
+    })
+}
+
 
 const initialValues = {
     email: "",
@@ -13,10 +28,6 @@ const initialValues = {
     email: Yup.string().email("Invalid email").required("Required"),
     password: Yup.string().min(6).required("Required")
   });
-
-  const handleLoginSubmit = (values) => {
-    console.log("Login:", values);
-};
 
 
 export function LoginPage({values,errors,touched,handleChange,handleBlur,handleSubmit}) {
@@ -66,7 +77,7 @@ export function LoginPage({values,errors,touched,handleChange,handleBlur,handleS
 const myHOC = withFormik({
   initialValues: initialValues,
   validationSchema: schema,
-  onSubmit: handleLoginSubmit,
+  handleSubmit: callLoginApi,
   validateOnMount: true
 });
 

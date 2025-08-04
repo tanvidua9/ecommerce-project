@@ -3,6 +3,7 @@ import Product from "./Product";
 import NoMatching from "./NoMatching";
 import { getProductList } from "../api";
 import Loading from "./Loading";
+import { Navigate } from "react-router-dom";
 
 function ProductList() {
   const [query, setQuery] = useState("");

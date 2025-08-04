@@ -1,18 +1,24 @@
-import React, { memo } from "react";
+import React, { memo,useContext } from "react";
 import { RiShoppingCartLine } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
+import UserContext from "./UserContext";
 
-
-function Navbar({ productCount }) {
+function Navbar({ productCount}) {
   const navigate = useNavigate();
+  const { setUser } = useContext(UserContext);
+  function handleLogout(){
+    localStorage.removeItem("token");
+    setUser(undefined);
+    navigate("/login");
+  }
 
   return (
     <div className="bg-white shadow-sm py-2 fixed top-0 left-0 w-full flex justify-between items-center px-6 md:px-20 z-50">
       <button onClick={() => navigate("/")} className="text-xl font-bold text-teal-700">ShopSmart</button>
 
       <div className="flex items-center gap-3">
-        <button onClick={() => navigate("/login")} className="text-sm text-teal-700 border border-teal-600 px-3 py-1 rounded hover:bg-teal-50">
-          Login
+        <button onClick={handleLogout} className="text-sm text-teal-700 border border-teal-600 px-3 py-1 rounded hover:bg-teal-50">
+          Logout
         </button>
         <Link to="/cart" className="relative ml-3">
           <RiShoppingCartLine className="text-3xl text-teal-700" />
