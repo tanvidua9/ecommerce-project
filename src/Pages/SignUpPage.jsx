@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import { Link } from "react-router-dom";
 import InputField from "../components/InputField";
 import axios from "axios";
+import withUser from "../components/withUser";
 
 function callSignupApi(values, bag) {
   axios
@@ -109,17 +110,15 @@ function SignupForm({values,errors,touched,handleChange,handleBlur,handleSubmit}
   );
 }
 
-const myHOC = withFormik({
+const FormikSignup=withFormik({
   initialValues: initialValues,
   validationSchema: schema,
   handleSubmit: callSignupApi,
   validateOnMount: true,
-});
+})(SignupForm);
 
-const EasySignup = myHOC(SignupForm);
 
-export default EasySignup;
-
+export default withUser(FormikSignup);
 
 
 

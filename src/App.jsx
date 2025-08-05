@@ -79,8 +79,8 @@ function App() {
                 element={<UserRoute><ProductDesc onAddToCart={handleAddToCart} /></UserRoute>}
               />
               <Route path="/cart" element={<UserRoute><CartPage cart={cart} updateCart={updateCart}/></UserRoute>} />
-              <Route path="/login" element={<AuthRoute><LoginPage setUser={setUser} /></AuthRoute>} />
-              <Route path="/signup" element={<AuthRoute><SignUpPage setUser={setUser} /></AuthRoute>} />
+              <Route path="/login" element={<AuthRoute><LoginPage/></AuthRoute>} />
+              <Route path="/signup" element={<AuthRoute><SignUpPage/></AuthRoute>} />
               <Route path="/forgot-password" element={<ForgotPasswordPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>

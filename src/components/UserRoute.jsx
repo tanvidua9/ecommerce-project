@@ -1,9 +1,8 @@
-import react,{useContext} from "react";
+import react from "react";
 import { Navigate} from "react-router-dom";
-import UserContext from "./UserContext";
+import withUser from "./withUser";
 
-function UserRoute({children}){
-    const {user} = useContext(UserContext); 
+function UserRoute({user,children}){
     if(!user){
         return <Navigate to="/login"/>
     }
@@ -11,4 +10,4 @@ function UserRoute({children}){
 }
 
 
-export default UserRoute;
+export default withUser(UserRoute);

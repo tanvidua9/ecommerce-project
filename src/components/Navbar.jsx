@@ -1,15 +1,13 @@
 import React, { memo,useContext } from "react";
 import { RiShoppingCartLine } from "react-icons/ri";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import UserContext from "./UserContext";
 
 function Navbar({ productCount}) {
-  const navigate = useNavigate();
   const { setUser } = useContext(UserContext);
   function handleLogout(){
     localStorage.removeItem("token");
     setUser(undefined);
-    navigate("/login");
   }
 
   return (

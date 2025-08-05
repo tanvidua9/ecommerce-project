@@ -51,7 +51,6 @@ function ProductList() {
 
   return (
     <>
-   
       <div className="flex flex-wrap justify-between items-center mb-6 gap-4">
         <select className="border border-gray-300 p-2 rounded text-sm" onChange={handleSort}>
           <option value="default">Default Sorting</option>
