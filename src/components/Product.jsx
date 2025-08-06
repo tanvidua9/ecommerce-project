@@ -5,7 +5,7 @@ const getRandomSale = () => {
   return (Math.random() * (30 - 5) + 5).toFixed(1);
 };
 
-function Product({ id, thumbnail, title, price, category }) {
+function Product({ id, thumbnail, title, price, category}) {
   const sale = getRandomSale();
 
   return (
