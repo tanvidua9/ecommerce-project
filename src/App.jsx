@@ -1,4 +1,4 @@
-import React, { useState,useCallback,useMemo, useEffect } from "react";
+import React, { useState,useCallback,useMemo, useEffect, createContext } from "react";
 import { Routes, Route} from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -13,7 +13,9 @@ import Loading from "./components/Loading";
 import axios from "axios";
 import UserRoute from "./components/UserRoute";
 import AuthRoute from "./components/AuthRoute";
-import UserContext from "./components/UserContext";
+import {UserContext, AlertContext} from "./components/Contexts";
+import Alert from "./components/Alert";
+
 
 function App() {
   const savedDataString= localStorage.getItem("my-cart") || "{}";
@@ -22,6 +24,12 @@ function App() {
   const [cart, setCart] = useState(savedData);
   const [user,setUser]= useState();
   const [loadingUser,setLoadingUser]= useState(true);
+  const [alert,setAlert]= useState();
+
+  const removeAlert = () => {
+      setAlert(undefined); 
+  };
+
 
   console.log("user:" , user);
   
@@ -68,8 +76,10 @@ function App() {
 
   return (
     <UserContext.Provider value={{ user, setUser }}> 
+    <AlertContext.Provider value={{alert,setAlert, removeAlert}}>
       <div className="flex flex-col min-h-screen">
         <Navbar productCount={totalCount} />
+         <Alert/>
         <main className="pt-20 flex-1 bg-gray-100 pb-20 px-4 sm:px-6 lg:px-8">
           <div className="bg-white px-4 py-4 rounded shadow-sm">
             <Routes>
@@ -88,6 +98,7 @@ function App() {
         </main>
         <Footer />
       </div>
+      </AlertContext.Provider>
     </UserContext.Provider>
   );
 }

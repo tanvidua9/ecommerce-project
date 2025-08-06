@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import { Link } from "react-router-dom";
 import InputField from "../components/InputField";
 import axios from "axios";
-import withUser from "../components/withUser";
+import { withUser, withAlert } from "../components/withProvider";
 
 function callSignupApi(values, bag) {
   axios
@@ -15,11 +15,13 @@ function callSignupApi(values, bag) {
     })
     .then((response) => {
       const { user, token } = response.data;
+      bag.props.setAlert({type:"success",message:'Profile saved successfully'});
       localStorage.setItem("token", token);
       bag.props.setUser(user);
     })
     .catch((error) => {
-        console.log("Signup error:", error.message);
+        const errorMessage = error.message || "Something went wrong";  
+        bag.props.setAlert({ type: "error", message: errorMessage });
     });
 }
 
@@ -118,7 +120,7 @@ const FormikSignup=withFormik({
 })(SignupForm);
 
 
-export default withUser(FormikSignup);
+export default withAlert(withUser(FormikSignup));
 
 
 

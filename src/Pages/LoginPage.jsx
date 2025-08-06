@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import { Link } from "react-router-dom";
 import InputField from "../components/InputField";
 import axios from "axios";
-import withUser from "../components/withUser";
+import { withUser, withAlert } from "../components/withProvider";
 
 function callLoginApi(values,bag){
   axios.post('https://myeasykart.codeyogi.io/login', {
@@ -12,10 +12,12 @@ function callLoginApi(values,bag){
         password: values.password
     }).then((response) => {
         const { user, token } = response.data;
+        bag.props.setAlert({type:"success",message:'Login was successfull'});
         localStorage.setItem("token", token);
         bag.props.setUser(user);
     }).catch((error) => {
-        console.log("Invalid Credentials");
+        const errorMessage = error.response?.data?.message || error.response?.data || "Something went wrong";  
+        bag.props.setAlert({ type: "error", message: errorMessage });
     })
 }
 
@@ -82,4 +84,4 @@ const FormikLogin= withFormik({
   validateOnMount: true
 })(LoginPage); 
 
-export default withUser(FormikLogin);
+export default withAlert(withUser(FormikLogin));

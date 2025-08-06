@@ -1,7 +1,7 @@
 import React, { memo,useContext } from "react";
 import { RiShoppingCartLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
-import UserContext from "./UserContext";
+import {UserContext} from "./Contexts";
 
 function Navbar({ productCount}) {
   const { setUser } = useContext(UserContext);
