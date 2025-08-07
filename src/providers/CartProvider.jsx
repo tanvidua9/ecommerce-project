@@ -3,20 +3,13 @@ import { CartContext } from "../components/Contexts";
 import { withUser } from "../components/withProvider";
 import { getCart, getProductsData, saveCart } from "../api";
 
-function CartProvider({isloggedIn,children}){
+function CartProvider({isLoggedIn,children}){
     const [cart, setCart] = useState([]);
 
     useEffect(function(){
-        if(!isloggedIn){
-            let savedData = {};
-            try {
+        if(!isLoggedIn){
             const savedDataString = localStorage.getItem("my-cart") || "{}"
-            if (savedDataString) {
-                savedData = JSON.parse(savedDataString);
-            }
-            } catch (error) {
-                console.error("Invalid cart JSON in localStorage", error);
-            }
+            const savedData = JSON.parse(savedDataString);
             quantityMapToCart(savedData);
 
         }else{
@@ -24,7 +17,7 @@ function CartProvider({isloggedIn,children}){
                 setCart(savedCart);
             })
         }
-    },[isloggedIn])
+    },[isLoggedIn])
 
     function quantityMapToCart(quantityMap){
         getProductsData(Object.keys(quantityMap)).then(function(products){
@@ -44,13 +37,16 @@ function CartProvider({isloggedIn,children}){
     }, [cart]);
     
     function updateCart(quantityMap){
-        if(!isloggedIn){
+        if(!isLoggedIn){
             const quantityMapString = JSON.stringify(quantityMap);
             localStorage.setItem("my-cart", quantityMapString);
             quantityMapToCart(quantityMap);
         }else{
             saveCart(quantityMap).then(function(response){
                 //setCart(response)]]]
+                // const map = response.data.reduce((prevMap, currItem) => (
+                //     { ...prevMap, [currItem.product_id]: currItem.quantity }
+                // ), {});
                 quantityMapToCart(quantityMap);
             })
         }

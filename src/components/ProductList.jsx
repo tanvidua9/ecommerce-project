@@ -21,8 +21,8 @@ function ProductList() {
   page= +page||1;
 
   useEffect(()=>{
-    let sortBy=undefined;
-    let backendSortType=undefined;
+    let sortBy;
+    let backendSortType;
 
     if (sortType === "name") {
       sortBy = "title";
@@ -76,6 +76,7 @@ function ProductList() {
 
         <input
           type="text"
+          value={query}
           onChange={handleSearch}
           placeholder="Search"
           className="border border-gray-300 rounded-md p-2 text-sm"
