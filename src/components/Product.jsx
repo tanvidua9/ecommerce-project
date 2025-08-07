@@ -16,7 +16,8 @@ function Product({ id, thumbnail, title, price, category}) {
 
       <div className="w-full h-48 mb-4">
         <img
-          src={thumbnail}
+          // src={thumbnail}
+          src={"https://images.pexels.com/photos/1647976/pexels-photo-1647976.jpeg"}
           alt={title}
           className="object-contain w-full h-full rounded"
         />

@@ -6,7 +6,8 @@ function CartRow({ item, handleRemove, handleChange}) {
       <div className="flex items-center gap-3 sm:w-1/3">
         <button className="text-xl" onClick={handleRemove} productid={item.id}>✖</button>
         <img
-          src={item.thumbnail}
+          // src={item.thumbnail}
+          src={"https://images.pexels.com/photos/1647976/pexels-photo-1647976.jpeg"}
           alt={item.title}
           className="w-12 h-12 object-cover rounded"
         />

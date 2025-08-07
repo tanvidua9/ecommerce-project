@@ -1,9 +1,11 @@
 import React, { memo,useContext } from "react";
 import { RiShoppingCartLine } from "react-icons/ri";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {UserContext} from "./Contexts";
+import { withCart } from "./withProvider";
 
-function Navbar({ productCount}) {
+function Navbar({ totalCount}) {
+  const navigate = useNavigate(); 
   const { setUser } = useContext(UserContext);
   function handleLogout(){
     localStorage.removeItem("token");
@@ -21,7 +23,7 @@ function Navbar({ productCount}) {
         <Link to="/cart" className="relative ml-3">
           <RiShoppingCartLine className="text-3xl text-teal-700" />
           <span className="absolute -top-2 -right-2 bg-teal-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-            {productCount}
+            {totalCount}
           </span>
         </Link>
       </div>
@@ -29,4 +31,4 @@ function Navbar({ productCount}) {
   );
 }
 
-export default memo(Navbar);
+export default withCart(memo(Navbar));

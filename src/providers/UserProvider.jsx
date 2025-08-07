@@ -7,8 +7,9 @@ function UserProvider({children}){
     const [user,setUser]= useState();
     const [loadingUser,setLoadingUser]= useState(true);
 
+    const token = localStorage.getItem("token");
+
     useEffect(() => {
-        const token = localStorage.getItem("token");
         if (token) {
         axios.get('https://myeasykart.codeyogi.io/me', {
             headers: {
@@ -31,7 +32,7 @@ function UserProvider({children}){
     }
 
     return (
-        <UserContext.Provider value={{ user, setUser }}>
+        <UserContext.Provider value={{isLoggedIn: !!token, user, setUser }}>
             {children}
         </UserContext.Provider>
     );
@@ -39,3 +40,7 @@ function UserProvider({children}){
 
 
 export default UserProvider;
+
+// !! converts truthy value to true and falsy value to false
+//false- false
+//falsy- 0,"",NaN, undefined, null

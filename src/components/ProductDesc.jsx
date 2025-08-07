@@ -4,8 +4,9 @@ import { getProductData } from "../api";
 import Loading from "./Loading";
 import { HiArrowSmLeft, HiArrowSmRight } from "react-icons/hi";
 import NotFound from "./NotFound";
+import { withCart } from "./withProvider";
 
-function ProductDesc({onAddToCart}) {
+function ProductDesc({handleAddToCart}) {
   const id = +(useParams().id);
   const [product, setProduct]= useState(null);
   const[loading,setLoading]= useState(true);
@@ -24,7 +25,7 @@ function ProductDesc({onAddToCart}) {
   console.log(product);
 
   function handleButtonClick(){
-    onAddToCart(id,count);
+    handleAddToCart(id,count);
     setCount(0);
   }
 
@@ -47,7 +48,8 @@ function ProductDesc({onAddToCart}) {
       <div className="flex flex-col md:flex-row h-full gap-6">
         <div className="w-full md:w-1/2">
           <img
-            src={product.thumbnail}
+            // src={product.thumbnail}
+            src={"https://images.pexels.com/photos/1647976/pexels-photo-1647976.jpeg"}
             alt={product.title}
             className="object-cover w-full h-full max-h-96 rounded-md"
           />
@@ -114,6 +116,6 @@ function ProductDesc({onAddToCart}) {
 
 }
 
-export default ProductDesc;
+export default withCart(ProductDesc);
 
 

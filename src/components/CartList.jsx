@@ -1,7 +1,56 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import CartRow from "./CartRow";
+import Loading from "../components/Loading";
+import { withCart } from "./withProvider";
 
-function CartList({ items, handleRemove, handleChange, localCart, updateMyCart }) {
+function CartList({cart,updateCart, setSubtotal}) {
+  const [quantityMap, setQuantityMap]= useState({});
+  
+  const cartToQuantityMap= ()=>
+    cart.reduce(
+      (m,cartItem)=>({...m , [cartItem.product.id]: cartItem.quantity}),
+    {}
+  );
+
+
+  useEffect(
+    function(){
+      setQuantityMap(cartToQuantityMap());
+    },
+    [cart]
+  )
+
+  function handleRemove(event){
+    const productId= event.currentTarget.getAttribute("productid");
+    const newQuantityMap= cartToQuantityMap();
+    delete newQuantityMap[productId];
+    updateCart(newQuantityMap);
+  }
+
+  function updateMyCart(){
+    updateCart(quantityMap);
+  }
+
+
+  function handleChange(event,productId){
+      const newValue= +event.target.value;
+      //const productId= event.target.getAttribute("productid");
+      const newQuantityMap= {...quantityMap, [productId]: newValue};
+      setQuantityMap(newQuantityMap);
+    }
+  
+  
+    useEffect(() => {
+      let subtotal = 0;
+      for (let cartItem of cart) {
+        const quantity = quantityMap[cartItem.product.id] || cartItem.quantity;
+        subtotal += cartItem.product.price * quantity;
+      }
+      setSubtotal(subtotal);
+    }, [cart, quantityMap]);
+
+  
+
   return (
     <div>
       <div className="hidden sm:flex justify-between bg-gray-100 font-semibold text-sm px-4 py-2">
@@ -11,10 +60,10 @@ function CartList({ items, handleRemove, handleChange, localCart, updateMyCart }
         <div className="w-1/6 text-right">Subtotal</div>
       </div>
 
-      {items.map((item) => (
+      {cart.map((cartItem) => (
         <CartRow
-          key={item.id}
-          item={{ ...item, quantity: localCart[item.id] || 1 }}
+          key={cartItem.product.id}
+          item={{ ...cartItem.product, quantity: quantityMap[cartItem.product.id] || cartItem.quantity }}
           handleRemove={handleRemove}
           handleChange={handleChange}
         />
@@ -44,4 +93,4 @@ function CartList({ items, handleRemove, handleChange, localCart, updateMyCart }
   );
 }
 
-export default CartList;
+export default withCart(CartList);
